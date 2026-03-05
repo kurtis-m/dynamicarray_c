@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 /**
- * Struct representing a dymanic array of integers
+ * Struct representing a dynamic array of integers
  */
 typedef struct Array {
     int* data;
@@ -54,15 +54,16 @@ void addToArray(Array* arr, const int value) {
 void printArray(const Array* arr) {
     if (arr->size == 0) {
         printf("[]\n");
+        printf("size: %llu\tcapacity: %llu\n\n",arr->capacity);
         return;
     }
 
     printf("[");
     for (size_t i = 0; i < arr->size; ++i) {
-        printf("%d",arr->data[i]);
-        if (i != arr->size-1) printf(", ");
+        printf(i == 0 ? "%d" : ", %d",arr->data[i]);
     }
     printf("]\n");
+    printf("size: %llu\tcapacity: %llu\n\n",arr->size,arr->capacity);
 }
 
 /**
@@ -71,7 +72,7 @@ void printArray(const Array* arr) {
  */
 void freeArray(Array* arr) {
     free(arr->data);
-    arr->data = NULL;
+    arr->data = nullptr;
     arr->size = 0;
     arr->capacity = 0;
 }
@@ -83,12 +84,12 @@ int main(void) {
 
     Array arr = createDynamicArray(4);
 
+    printArray(&arr);
+
     for (int i = 0; i < 10; ++i) {
-        addToArray(&arr, 5 * i);
+        addToArray(&arr, 5 * i + 5);
         printArray(&arr);
     }
-
-    printArray(&arr);
 
     freeArray(&arr);
     return 0;
