@@ -102,7 +102,6 @@ void freeArray(Array* arr) {
     arr->capacity = 0;
 }
 
-
 /**
  * Sorts a dynamic array in ascending order
  * @param arr Pointer to the array
