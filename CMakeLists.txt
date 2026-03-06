@@ -3,4 +3,6 @@ project(dynamicarray_c C)
 
 set(CMAKE_C_STANDARD 23)
 
-add_executable(dynamicarray_c main.c)
+add_executable(dynamicarray_c main.c
+        array.h
+        array.c)
