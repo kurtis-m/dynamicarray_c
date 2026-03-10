@@ -20,7 +20,7 @@ double getArrayAverage(const Array* arr) {
  */
 int main(void) {
 
-    Array arr = createDynamicArray(4);
+    Array* arr = initDynamicArray();
 
     int input = 0;
     int count = 0;
@@ -30,16 +30,16 @@ int main(void) {
         scanf("%d",&input);
 
         if (input < 0) break;
-        addToArray(&arr,input);
+        addToArray(arr,input);
         ++count;
     }
 
-    printArray(&arr);
-    selectionSort(&arr);
-    printArray(&arr);
+    printArray(arr);
+    selectionSort(arr);
+    printArray(arr);
 
-    printf("average: %f",getArrayAverage(&arr));
+    printf("average: %f",getArrayAverage(arr));
 
-    freeArray(&arr);
+    freeArray(arr);
     return 0;
 }
