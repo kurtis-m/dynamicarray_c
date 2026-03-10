@@ -3,16 +3,28 @@
 #include <stdlib.h>
 #include "array.h"
 
+#define DEFAULT_CAPACITY 8
+
 /**
  * Method that returns a pointer to a new dynamic array struct
- * @param initCapacity Initial capacity of the dynamic array
  * @return Pointer to the new dynamic array
  */
-Array createDynamicArray(const size_t initCapacity) {
-    Array arr;
-    arr.data = (int*) malloc(initCapacity * sizeof(int));
-    arr.size = 0;
-    arr.capacity = initCapacity;
+Array* initDynamicArray() {
+    Array* arr = malloc(sizeof(Array));
+    if (!arr) {
+        fprintf(stderr,"Malloc error in array\n");
+        return nullptr;
+    }
+
+    arr->data = (int*) malloc(DEFAULT_CAPACITY * sizeof(int));
+    if (!arr->data) {
+        fprintf(stderr,"Malloc error in array data\n");
+        free(arr);
+        return nullptr;
+    }
+
+    arr->size = 0;
+    arr->capacity = DEFAULT_CAPACITY;
     return arr;
 }
 
@@ -22,22 +34,23 @@ Array createDynamicArray(const size_t initCapacity) {
  * @param value Value of the integer that is being added
  */
 void addToArray(Array* arr, const int value) {
-    if (arr->data == NULL) {
-        fprintf(stderr, "Cannot add to NULL array data");
+    if (!arr) {
+        fprintf(stderr,"NULL array\n");
         return;
     }
-
+    if (arr->data == nullptr) {
+        fprintf(stderr, "Cannot add to NULL array data\n");
+        return;
+    }
     if (arr->size == arr->capacity) {
         const size_t nCapacity = arr->capacity * 2;
-        int* nData = (int*) realloc(arr->data, nCapacity * sizeof(int));
-        if (nData) {
-            arr->data = nData;
-            arr->capacity = nCapacity;
-        }
-        else {
-            fprintf(stderr,"Realloc error\n");
+        int* nData = realloc(arr->data, nCapacity * sizeof(int));
+        if (!nData) {
+            fprintf(stderr,"Realloc error in array data\n");
             return;
         }
+        arr->data = nData;
+        arr->capacity = nCapacity;
     }
 
     arr->data[arr->size] = value;
@@ -48,9 +61,13 @@ void addToArray(Array* arr, const int value) {
  * Removes and returns the last value in the array
  * @param arr Pointer to the array
  * @param result Pointer to store the result
- * @return True or false if the value was removed
  */
 bool popFromArray(Array* arr, int* result) {
+    if (!arr) {
+        fprintf(stderr,"NULL array\n");
+        return false;
+    }
+
     if (arr->size == 0) return false;
 
     *result = arr->data[arr->size-1];
@@ -63,11 +80,14 @@ bool popFromArray(Array* arr, int* result) {
  * @param arr Pointer to the array
  * @param index Index of the array
  * @param result Pointer to store the result
- * @return True or false if the get succeeded
  */
 bool arrayGet(const Array* arr, const size_t index, int* result) {
+    if (!arr) {
+        fprintf(stderr,"NULL array\n");
+        return false;
+    }
     if (index >= arr->size) {
-        fprintf(stderr, "Out of bounds index");
+        fprintf(stderr, "Out of bounds index\n");
         return false;
     }
     *result = arr->data[index];
@@ -79,11 +99,14 @@ bool arrayGet(const Array* arr, const size_t index, int* result) {
  * @param arr Pointer to the array to print
  */
 void printArray(const Array* arr) {
+    if (!arr) {
+        fprintf(stderr,"NULL array\n");
+        return;
+    }
     if (arr->size == 0) {
         printf("[]\n");
         return;
     }
-
     printf("[");
     for (size_t i = 0; i < arr->size; ++i) {
         printf(i == 0 ? "%d" : ", %d",arr->data[i]);
@@ -96,10 +119,28 @@ void printArray(const Array* arr) {
  * @param arr Pointer to the array to free
  */
 void freeArray(Array* arr) {
+    if (!arr) return;
     free(arr->data);
     arr->data = nullptr;
     arr->size = 0;
     arr->capacity = 0;
+    free(arr);
+}
+
+void trimArray(Array* arr) {
+    if (!arr) {
+        fprintf(stderr,"NULL array\n");
+        return;
+    }
+
+    const size_t nCapacity = arr->size <= DEFAULT_CAPACITY ? DEFAULT_CAPACITY : arr->size;
+    int* nData = realloc(arr->data,nCapacity * sizeof(int));
+    if (!nData) {
+        fprintf(stderr,"Realloc error\n");
+        return;
+    }
+    arr->data = nData;
+    arr->capacity = nCapacity;
 }
 
 /**
@@ -107,6 +148,13 @@ void freeArray(Array* arr) {
  * @param arr Pointer to the array
  */
 void selectionSort(Array* arr) {
+    if (!arr) {
+        fprintf(stderr,"NULL array\n");
+        return;
+    }
+
+    if (arr->size <= 1) return;
+
     for (size_t i = 0; i < arr->size-1; ++i) {
         size_t current = i;
 

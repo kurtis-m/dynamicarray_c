@@ -13,12 +13,13 @@ typedef struct Array {
     size_t capacity;
 } Array;
 
-Array createDynamicArray(size_t initCapacity);
+Array* initDynamicArray();
 void addToArray(Array* arr, int value);
 bool popFromArray(Array* arr, int* result);
 bool arrayGet(const Array* arr, size_t index, int* result);
 void printArray(const Array* arr);
 void freeArray(Array* arr);
+void trimArray(Array* arr);
 void selectionSort(Array* arr);
 
 
