@@ -127,6 +127,10 @@ void freeArray(Array* arr) {
     free(arr);
 }
 
+/**
+ * Trim the array capacity to the minimum size
+ * @param arr Pointer to the array
+ */
 void trimArray(Array* arr) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
