@@ -5,10 +5,6 @@
 
 #define DEFAULT_CAPACITY 8
 
-/**
- * Method that returns a pointer to a new dynamic array struct
- * @return Pointer to the new dynamic array
- */
 Array* initDynamicArray() {
     Array* arr = malloc(sizeof(Array));
     if (!arr) {
@@ -28,11 +24,6 @@ Array* initDynamicArray() {
     return arr;
 }
 
-/**
- * Method that adds an integer value to a dynamic array
- * @param arr Array to be added to
- * @param value Value of the integer that is being added
- */
 void addToArray(Array* arr, const int value) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
@@ -57,11 +48,6 @@ void addToArray(Array* arr, const int value) {
     ++arr->size;
 }
 
-/**
- * Removes and returns the last value in the array
- * @param arr Pointer to the array
- * @param result Pointer to store the result
- */
 bool popFromArray(Array* arr, int* result) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
@@ -75,12 +61,6 @@ bool popFromArray(Array* arr, int* result) {
     return true;
 }
 
-/**
- * Get the value of the array at the desired index
- * @param arr Pointer to the array
- * @param index Index of the array
- * @param result Pointer to store the result
- */
 bool arrayGet(const Array* arr, const size_t index, int* result) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
@@ -94,10 +74,6 @@ bool arrayGet(const Array* arr, const size_t index, int* result) {
     return true;
 }
 
-/**
- * Method to print an array to the console
- * @param arr Pointer to the array to print
- */
 void printArray(const Array* arr) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
@@ -114,10 +90,6 @@ void printArray(const Array* arr) {
     printf("]\n");
 }
 
-/**
- * Method that frees the memory of the dynamic array's data
- * @param arr Pointer to the array to free
- */
 void freeArray(Array* arr) {
     if (!arr) return;
     free(arr->data);
@@ -127,10 +99,6 @@ void freeArray(Array* arr) {
     free(arr);
 }
 
-/**
- * Trim the array capacity to the minimum size
- * @param arr Pointer to the array
- */
 void trimArray(Array* arr) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
@@ -147,10 +115,6 @@ void trimArray(Array* arr) {
     arr->capacity = nCapacity;
 }
 
-/**
- * Sorts a dynamic array in ascending order
- * @param arr Pointer to the array
- */
 void selectionSort(Array* arr) {
     if (!arr) {
         fprintf(stderr,"NULL array\n");
