@@ -7,11 +7,7 @@
 /**
  * Struct representing a dynamic array of integers
  */
-typedef struct Array {
-    int* data;
-    size_t size;
-    size_t capacity;
-} Array;
+typedef struct dynamic_array Array;
 
 /**
  * Initializes a dynamic array

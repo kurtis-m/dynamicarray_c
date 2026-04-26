@@ -3,17 +3,6 @@
 
 #include "array.h"
 
-double getArrayAverage(const Array* arr) {
-    if (arr->size == 0) return 0.0;
-
-    long long sum = 0;
-    for (size_t i = 0; i < arr->size; ++i) {
-        int value;
-        arrayGet(arr,i,&value);
-        sum += value;
-    }
-    return (double) sum / arr->size;
-}
 
 /*
  *for testing and debug purposes
@@ -38,7 +27,6 @@ int main(void) {
     selectionSort(arr);
     printArray(arr);
 
-    printf("average: %f",getArrayAverage(arr));
 
     freeArray(arr);
     return 0;
