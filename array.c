@@ -69,6 +69,8 @@ void printArray(const Array* arr) {
         printf(i == 0 ? "%d" : ", %d",arr->data[i]);
     }
     printf("]\n");
+    printf("Size: %lu\nCapacity: %lu\n\n", arr->size, arr->capacity);
+
 }
 
 void freeArray(Array* arr) {
